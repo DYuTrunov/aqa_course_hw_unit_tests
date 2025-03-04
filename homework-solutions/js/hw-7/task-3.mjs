@@ -9,7 +9,11 @@
 */
 
 function digitalRoot(number) {
-  // Ваш код
+  if (number <= 9) {
+    return number;
+  } else {
+    return digitalRoot((number % 10) + digitalRoot(Math.floor(number / 10)));
+  }
 }
 
 export { digitalRoot };

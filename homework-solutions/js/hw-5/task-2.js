@@ -17,5 +17,21 @@
  * 100 - делится на 5
  */
 let fizzBuzzResult = '';
+const firstDiv = 3;
+const secondDiv = 5;
+for (let i = 1; i <= 100; i++) {
+  if (i % firstDiv === 0 && i % secondDiv === 0) {
+    fizzBuzzResult += `${i} - делится и на ${firstDiv} и на ${secondDiv}`;
+  } else {
+    if (i % secondDiv === 0) {
+      fizzBuzzResult += `${i} - делится на ${secondDiv}`;
+    } else if (i % firstDiv === 0) {
+      fizzBuzzResult += `${i} - делится на ${firstDiv}`;
+    } else {
+      fizzBuzzResult += i;
+    }
+  }
+  if (i < 100) fizzBuzzResult += '\n';
+}
 
 export { fizzBuzzResult };
