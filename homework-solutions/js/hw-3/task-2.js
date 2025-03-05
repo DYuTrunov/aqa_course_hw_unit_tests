@@ -4,3 +4,6 @@
 n + nn + nnn, где n не перемножаются, а конкатенируются
 
 */
+const n = 9;
+const summaN = n + +('' + n + n) + +('' + n + n + n);
+console.log(summaN);
