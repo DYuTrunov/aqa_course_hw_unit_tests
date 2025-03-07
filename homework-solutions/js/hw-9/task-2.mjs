@@ -15,7 +15,7 @@ const characters = [
 
 function addCharacter(character) {
   const isValidObject = ['name', 'age'].every((key) => key in character);
-  if (!isValidObject) throw new Error(`Invalid object - "${character}"`);
+  if (!isValidObject) throw new Error(`Invalid object - "${JSON.stringify(character)}"`);
   characters.push({ name: character.name, age: character.age });
   return characters;
 }
@@ -29,14 +29,28 @@ function getCharactersByAge(minAge) {
   return characters.filter((elem) => elem.age >= minAge);
 }
 
+const characters = [
+  { name: 'Barney', age: 35 },
+  { name: 'Fred', age: 39 },
+  { name: 'Jack', age: 49 },
+];
+
+const newName = { name: 'Bri', age: 22 };
+
+function getCharacter(name) {
+  return characters.find((elem) => elem.name === name);
+}
+
 function updateCharacter(name, newCharacter) {
   const isValidObject = ['name', 'age'].every((key) => key in newCharacter);
-  if (!isValidObject) throw new Error(`Invalid object - "${newCharacter}"`);
-  const index = characters.indexOf(getCharacter(name));
-  if (index === -1) throw new Error(`Name "${name}" not found`);
-  characters[index] = { name: newCharacter.name, age: newCharacter.age };
+  if (!isValidObject) throw new Error(`Invalid object - "${JSON.stringify(newCharacter)}"`);
+  const updateChar = getCharacter(name);
+  if (!updateChar) throw new Error(`Name "${name}" not found`);
+  Object.assign(updateChar, newCharacter);
   return characters;
 }
+
+console.log(updateCharacter('Barney', newName));
 
 function removeCharacter(name) {
   const index = characters.findIndex((elem) => elem.name === name);
