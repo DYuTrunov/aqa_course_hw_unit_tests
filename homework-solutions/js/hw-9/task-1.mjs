@@ -13,12 +13,11 @@ const character = { name: 'Barney', age: 36, gender: 'male', isQa: true };
 // 1
 let keyWithFourChars;
 keyWithFourChars = Object.keys(character).filter((key) => key.length === 4);
-console.log(keyWithFourChars);
 
 // 2
 let stringValues;
 stringValues = Object.values(character).filter((value) => typeof value === 'string');
-console.log(stringValues);
+
 // 3
 /* Do not touch this part */
 const logSpy = jest.spyOn(console, 'log');
@@ -36,4 +35,5 @@ let hasSalaryKey1stOption;
 let hasSalaryKey2ndOption;
 hasSalaryKey1stOption = 'salary' in character;
 hasSalaryKey2ndOption = Object.hasOwn(character, 'salary');
+
 export { keyWithFourChars, stringValues, hasSalaryKey1stOption, hasSalaryKey2ndOption, keyValuePairs, logSpy };
