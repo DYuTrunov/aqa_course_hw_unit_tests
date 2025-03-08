@@ -6,6 +6,14 @@
 */
 
 let qa;
+qa = {
+  name: 'Dimitry',
+  age: 36,
+  salary: 900,
+  getInfo(greetingsWord) {
+    return `${greetingsWord}, my name is ${this.name}, i'm ${this.age} and my salary is ${this.salary}`;
+  },
+};
 
 /*
  2. Changing the context
@@ -16,15 +24,21 @@ let qa;
  */
 
 let anotherQa;
+anotherQa = {
+  name: 'Vitalyi',
+  age: 27,
+  salary: 1700,
+};
 
 // Используйте bind с greetingWord "Hello"
 let bindResult;
-
+bindResult = qa.getInfo.bind(anotherQa)(greetings);
 // Используйте call с greetingWord "Hi"
 let callResult;
-
+callResult = qa.getInfo.call(anotherQa, greetings);
 // Используйте apply с greetingWord "Hey"
 let applyResult;
+applyResult = qa.getInfo.apply(anotherQa, [greetings]);
 
 /*
  3. Closures
