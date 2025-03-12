@@ -11,7 +11,7 @@ qa = {
   age: 36,
   salary: 900,
   getInfo(greetingsWord) {
-    return `${greetingsWord}, my name is ${this.name}, i'm ${this.age} and my salary is ${this.salary}`;
+    return `${greetingsWord}, my name is ${this.name}, I'm ${this.age} and my salary is ${this.salary}`;
   },
 };
 
@@ -32,13 +32,13 @@ anotherQa = {
 
 // Используйте bind с greetingWord "Hello"
 let bindResult;
-bindResult = qa.getInfo.bind(anotherQa)(greetings);
+bindResult = qa.getInfo.bind(anotherQa)('Hello');
 // Используйте call с greetingWord "Hi"
 let callResult;
-callResult = qa.getInfo.call(anotherQa, greetings);
+callResult = qa.getInfo.call(anotherQa, 'Hi');
 // Используйте apply с greetingWord "Hey"
 let applyResult;
-applyResult = qa.getInfo.apply(anotherQa, [greetings]);
+applyResult = qa.getInfo.apply(anotherQa, ['Hey']);
 
 /*
  3. Closures
@@ -52,9 +52,16 @@ applyResult = qa.getInfo.apply(anotherQa, [greetings]);
 */
 
 function createCounter() {
-  // Ваш код
+  let count = 0;
+  return () => {
+    count++;
+    console.log(`Function was called ${count} times`);
+  };
 }
 
 const functionCallCounter = createCounter();
+// for (let i = 0; i < 5; i++) {
+//   functionCallCounter();
+// }
 
 export { qa, bindResult, callResult, applyResult, functionCallCounter, anotherQa };
