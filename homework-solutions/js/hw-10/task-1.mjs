@@ -56,12 +56,13 @@ function createCounter() {
   return () => {
     count++;
     console.log(`Function was called ${count} times`);
+    return count;
   };
 }
 
 const functionCallCounter = createCounter();
 // for (let i = 0; i < 5; i++) {
-//   functionCallCounter();
+//   console.log(functionCallCounter());
 // }
 
 export { qa, bindResult, callResult, applyResult, functionCallCounter, anotherQa };

@@ -16,11 +16,21 @@
 */
 
 function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
+  return Math.round(Math.random() * (max - min) + min);
 }
 
 function uniqueRandomGenerator(n) {
-  // Ваш код
+  if (typeof n !== 'number') throw new Error(`${n} - не валидное значение. Тип только number!`);
+  const arrOfN = [];
+  return () => {
+    if (arrOfN.length === n) return 'All numbers were received';
+    let randomN;
+    do {
+      randomN = getRandomArbitrary(1, n);
+    } while (arrOfN.includes(randomN));
+    arrOfN.push(randomN);
+    return randomN;
+  };
 }
 
 export { uniqueRandomGenerator };
