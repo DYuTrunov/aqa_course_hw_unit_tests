@@ -20,7 +20,7 @@ function getRandomArbitrary(min, max) {
 }
 
 function uniqueRandomGenerator(n) {
-  if (typeof n !== 'number') throw new Error(`${n} - не валидное значение. Тип только number!`);
+  if (typeof n !== 'number') throw new Error(`${n} - невалидное значение. Тип только number!`);
   const arrOfN = [];
   return () => {
     if (arrOfN.length === n) return 'All numbers were received';
