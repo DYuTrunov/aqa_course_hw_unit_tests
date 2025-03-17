@@ -6,6 +6,14 @@
 */
 
 let qa;
+qa = {
+  name: 'Dimitry',
+  age: 36,
+  salary: 900,
+  getInfo(greetingsWord) {
+    return `${greetingsWord}, my name is ${this.name}, I'm ${this.age} and my salary is ${this.salary}`;
+  },
+};
 
 /*
  2. Changing the context
@@ -16,15 +24,21 @@ let qa;
  */
 
 let anotherQa;
+anotherQa = {
+  name: 'Vitalyi',
+  age: 27,
+  salary: 1700,
+};
 
 // Используйте bind с greetingWord "Hello"
 let bindResult;
-
+bindResult = qa.getInfo.bind(anotherQa)('Hello');
 // Используйте call с greetingWord "Hi"
 let callResult;
-
+callResult = qa.getInfo.call(anotherQa, 'Hi');
 // Используйте apply с greetingWord "Hey"
 let applyResult;
+applyResult = qa.getInfo.apply(anotherQa, ['Hey']);
 
 /*
  3. Closures
@@ -38,9 +52,17 @@ let applyResult;
 */
 
 function createCounter() {
-  // Ваш код
+  let count = 0;
+  return () => {
+    count++;
+    console.log(`Function was called ${count} times`);
+    return count;
+  };
 }
 
 const functionCallCounter = createCounter();
+// for (let i = 0; i < 5; i++) {
+//   console.log(functionCallCounter());
+// }
 
 export { qa, bindResult, callResult, applyResult, functionCallCounter, anotherQa };
