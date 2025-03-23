@@ -1,11 +1,9 @@
-import { textSpanIntersectsWithPosition } from 'typescript';
-
 class Employee {
   #salary;
 
   constructor(firstName, lastName, salary) {
-    this._firstName = firstName;
-    this._lastName = lastName;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.salary = salary;
   }
 
@@ -21,58 +19,57 @@ class Employee {
     return this.#salary;
   }
 
-  set firstName(name) {
-    if (typeof name !== 'string') {
-      throw new Error(`"${name}" is not a string`);
+  set firstName(value) {
+    if (typeof value !== 'string') {
+      throw new Error(`The value '${value}' for firstname must be a string`);
     }
-    if (!/^[A-Za-z]+$/.test(name)) {
-      throw new Error(`"${name}" must contain only Latin letters`);
+    if (!/^[A-Za-z]+$/.test(value)) {
+      throw new Error(`The value '${value}' for firstname must contain only latin letters`);
     }
-    if (name.length < 2) {
-      throw new Error(`"${name}" must be at least 2 characters long`);
+    if (value.length < 2) {
+      throw new Error(`The value '${value}' for firstname must be at least 2 characters long`);
     }
-    if (name.length > 50) {
-      throw new Error(`"${name}" must not exceed 50 characters`);
+    if (value.length > 50) {
+      throw new Error(`The value '${value}' for firstname must not exceed 50 characters`);
     }
-    this._firstName = name;
+    this._firstName = value;
   }
 
-  set lastName(surname) {
-    if (typeof surname !== 'string') {
-      throw new Error(`"${surname}" is not a string`);
+  set lastName(value) {
+    if (typeof value !== 'string') {
+      throw new Error(`The value '${value}' for lastname is not a string`);
     }
-    if (!/^[A-Za-z]+$/.test(surname)) {
-      throw new Error(`"${surname}" must contain only Latin letters`);
+    if (!/^[A-Za-z]+$/.test(value)) {
+      throw new Error(`The value '${value}' for lastname must contain only latin letters`);
     }
-    if (surname.length < 2) {
-      throw new Error(`"${surname}" must be at least 2 characters long`);
+    if (value.length < 2) {
+      throw new Error(`The value '${value}' for lastname must be at least 2 characters long`);
     }
-    if (surname.length > 50) {
-      throw new Error(`"${surname}" must not exceed 50 characters`);
+    if (value.length > 50) {
+      throw new Error(`The value '${value}' for lastname must not exceed 50 characters`);
     }
-    this._lastName = surname;
+    this._lastName = value;
   }
 
-  set salary(sum) {
-    if (typeof sum !== 'number' || isNaN(sum)) {
-      throw new Error(`"${sum}" is not a number`);
+  set salary(value) {
+    if (typeof value !== 'number') {
+      throw new Error(`The value '${value}' for salary is not a number`);
     }
-    if (sum <= 0) {
-      throw new Error(`"${sum}" must be greater than 0`);
+    if (value <= 0) {
+      throw new Error(`The value '${value}' for salary must be greater than 0`);
     }
-    if (sum >= 100000) {
-      throw new Error(`"${sum}" must be less than 100000`);
+    if (value >= 100000) {
+      throw new Error(`The value '${value}' for salary must be less than 100000`);
     }
-    this.#salary = sum;
+    this.#salary = value;
   }
 
   getFullName() {
-    return `${this._firstName} ${this._lastName}`;
+    return `${this.firstName} ${this.lastName}`;
   }
 }
-
 class Developer extends Employee {
-  #programmingLanguages = [];
+  #programmingLanguages;
 
   constructor(firstName, lastName, salary, programmingLanguages = []) {
     super(firstName, lastName, salary);
@@ -90,7 +87,6 @@ class Developer extends Employee {
     return this.#programmingLanguages.push(language);
   }
 }
-
 class Manager extends Employee {
   #teamSize;
 
@@ -103,7 +99,7 @@ class Manager extends Employee {
   }
   set teamSize(value) {
     if (typeof value !== 'number' || value < 0) {
-      throw new Error(`${value} is not a valid team size`);
+      throw new Error(`${value} is not a valid teamsize`);
     }
     this.#teamSize = value;
   }
@@ -112,9 +108,8 @@ class Manager extends Employee {
     return ++this.#teamSize;
   }
 }
-
 class Designer extends Employee {
-  #designTools = [];
+  #designTools;
 
   constructor(firstName, lastName, salary, designTools = []) {
     super(firstName, lastName, salary);
@@ -126,20 +121,43 @@ class Designer extends Employee {
   }
 
   addDesignTool(tool) {
-    if (typeof tool !== 'string') {
+    if (typeof tool !== 'string' || !tool.trim().length) {
       throw new Error(`"${tool}" is not defined`);
     }
     return this.#designTools.push(tool);
   }
 }
-
 class Company {
-  #employees = [];
+  #employees;
 
   constructor(title, phone, address, employees = []) {
+    if (typeof title !== 'string') {
+      throw new Error(`The value '${title}' for title must be a string`);
+    }
+    if (!title.trim().length) {
+      throw new Error(`The value '${title}' for titlecannot be empty or just whitespace`);
+    }
     this._title = title;
+
+    if (typeof phone !== 'number') {
+      throw new Error(`The value '${phone}' for phone must be a number`);
+    }
     this._phone = phone;
+
+    if (typeof address !== 'string') {
+      throw new Error(`The value '${address}' for address must be a string`);
+    }
+    if (!address.trim().length) {
+      throw new Error(`The value '${address}' for address cannot be empty or just whitespace`);
+    }
     this._address = address;
+
+    if (!Array.isArray(employees)) {
+      throw new Error(`The value '${employees}' for address must be an array`);
+    }
+    if (!employees.every((emp) => emp instanceof Employee)) {
+      throw new Error('All elements in employees must be instances of Employee');
+    }
     this.#employees = employees;
   }
 
@@ -170,13 +188,13 @@ class Company {
   }
 
   getInfo() {
-    return `Компания: ${this._title}\nАдрес: ${this._address}\nКоличество сотрудников: ${this.#employees.length}`;
+    return `Компания: ${this.title}\nАдрес: ${this.address}\nКоличество сотрудников: ${this.#employees.length}`;
   }
 
   findEmployeeByName(firstName) {
     const foundEmployee = this.#employees.find((name) => name.firstName === firstName);
     if (!foundEmployee) {
-      throw new Error(`Employee with first name "${firstName}" not found`);
+      throw new Error(`Employee with firstname "${firstName}" not found`);
     }
     return foundEmployee;
   }
@@ -188,7 +206,7 @@ class Company {
   removeEmployee(firstName) {
     const foundIndex = this.#getEmployeeIndex(firstName);
     if (foundIndex === -1) {
-      throw new Error(`Employee with first name "${firstName}" not found`);
+      throw new Error(`Employee with firstname "${firstName}" not found`);
     }
     return this.#employees.splice(foundIndex, 1);
   }
@@ -200,7 +218,7 @@ class Company {
   getEmployeesByProfession(profession) {
     const professionClasses = { Developer, Manager, Designer };
     if (!Object.keys(professionClasses).includes(profession)) {
-      throw new Error(`${profession} is not a valid profession`);
+      return [];
     }
     return this.#employees.filter((employee) => employee instanceof professionClasses[profession]);
   }

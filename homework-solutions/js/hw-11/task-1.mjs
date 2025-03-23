@@ -2,9 +2,9 @@ class Employee {
   #salary;
 
   constructor(firstName, lastName, profession, salary) {
-    this._firstName = firstName;
-    this._lastName = lastName;
-    this._profession = profession;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.profession = profession;
     this.salary = salary;
   }
 
@@ -24,49 +24,73 @@ class Employee {
     return this.#salary;
   }
 
-  set firstName(name) {
-    if (typeof name !== 'string') {
-      throw new Error(`"${name}" is not a string`);
+  set firstName(value) {
+    if (typeof value !== 'string') {
+      throw new Error(`The value '${value}' for firstname must be a string`);
     }
-    this._firstName = name;
+    this._firstName = value;
   }
 
-  set lastName(surname) {
-    if (typeof surname !== 'string') {
-      throw new Error(`"${surname}" is not a string`);
+  set lastName(value) {
+    if (typeof value !== 'string') {
+      throw new Error(`The value '${value}' for lastname must be a string`);
     }
-    this._lastName = surname;
+    this._lastName = value;
   }
 
-  set profession(prof) {
-    if (typeof prof !== 'string') {
-      throw new Error(`"${prof}" is not a string`);
+  set profession(value) {
+    if (typeof value !== 'string') {
+      throw new Error(`The value '${value}' for profession must be a string`);
     }
-    this._profession = prof;
+    this._profession = value;
   }
 
-  set salary(sum) {
-    if (typeof sum !== 'number') {
-      throw new Error(`"${sum}" is not a number`);
+  set salary(value) {
+    if (typeof value !== 'number' || isNaN(value)) {
+      throw new Error(`The value '${value}' for salary must be a number`);
     }
-    if (sum < 0) {
-      throw new Error(`"${sum}" must be greater than 0`);
+    if (value <= 0) {
+      throw new Error('The value for salary must be greater than 0');
     }
-    this.#salary = sum;
+    this.#salary = value;
   }
 
   getFullName() {
-    return `${this._firstName} ${this._lastName}`;
+    return `${this.firstName} ${this.lastName}`;
   }
 }
 
 class Company {
-  #employees = [];
+  #employees;
 
   constructor(title, phone, address, employees = []) {
+    if (typeof title !== 'string') {
+      throw new Error(`The value '${title}' for title must be a string`);
+    }
+    if (!title.trim().length) {
+      throw new Error('Title cannot be empty or just whitespace');
+    }
     this._title = title;
+
+    if (typeof phone !== 'number' || isNaN(phone)) {
+      throw new Error(`The value '${phone}' for phone must be a number`);
+    }
     this._phone = phone;
+
+    if (typeof address !== 'string') {
+      throw new Error(`The value '${address}' for address must be a string`);
+    }
+    if (!address.trim().length) {
+      throw new Error('Address cannot be empty or just whitespace');
+    }
     this._address = address;
+
+    if (!Array.isArray(employees)) {
+      throw new Error('Employees must be an array');
+    }
+    if (!employees.every((employee) => employee instanceof Employee)) {
+      throw new Error('All elements in employees must be instances of Employee');
+    }
     this.#employees = employees;
   }
 
@@ -94,7 +118,7 @@ class Company {
   }
 
   getInfo() {
-    return `Компания: ${this._title}\nАдрес: ${this._address}\nКоличество сотрудников: ${this.#employees.length}`;
+    return `Компания: ${this.title}\nАдрес: ${this.address}\nКоличество сотрудников: ${this.#employees.length}`;
   }
 }
 
