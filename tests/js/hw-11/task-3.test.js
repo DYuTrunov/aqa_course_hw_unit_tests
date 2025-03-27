@@ -64,7 +64,7 @@ describe('[JS] - [HW 11] - Task 3', () => {
   describe('addEmployee Method', () => {
     let company;
     beforeEach(() => {
-      company = new Company();
+      company = new Company('Tech Corp', 123456, 'Main Street');
     });
     test('should add a valid employee', () => {
       const dev = new Developer('Alice', 'Smith', 80000, ['JavaScript']);
@@ -88,7 +88,7 @@ describe('[JS] - [HW 11] - Task 3', () => {
   describe('[getEmployeesByProfession] method', () => {
     let company;
     beforeEach(() => {
-      company = new Company();
+      company = new Company('Tech Corp', 123456, 'Main Street');
     });
 
     test('should return all employees of a given profession', () => {

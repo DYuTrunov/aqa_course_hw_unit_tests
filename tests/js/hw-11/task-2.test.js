@@ -53,7 +53,7 @@ describe('[JS] - [HW 11] - Task 2', () => {
     });
 
     it('should return 0 if there are no employees', () => {
-      company = new Company('Empty Corp', '000-000', 'No Address');
+      company = new Company('Empty Corp', 123456, 'No Address');
       expect(company.getTotalSalary()).toBe(0);
     });
   });
